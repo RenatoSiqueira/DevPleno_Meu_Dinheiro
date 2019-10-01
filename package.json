@@ -1,0 +1,12 @@
+{
+  "name": "DevPleno_Meu_Dinheiro",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RenatoSiqueira/DevPleno_Meu_Dinheiro.git",
+  "author": "Renato Siqueira <renatoelysiqueira@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1"
+  }
+}
