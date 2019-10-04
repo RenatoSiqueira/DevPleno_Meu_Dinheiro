@@ -1,12 +1,12 @@
-const express = require('express')
-const app = express()
+require('dotenv').config()
+const MongoClient = require('mongodb').MongoClient
+
 const port = 3000
+const mongoUri = process.env.MONGOSERVER || 'mongodb://localhost:27017/meu-dinheiro'
 
-app.use(express.static('public'))
-app.set('view engine', 'ejs')
+const app = require('./app')
 
-app.get('/', (req, res) => {
-    res.render('home')
+MongoClient.connect(mongoUri, ({ useNewUrlParser: true }), (err, db) => {
+    if (err) throw err
+    app(db).listen(port, () => console.log('Server running...'))
 })
-
-app.listen(port, () => console.log('Server Running...'))

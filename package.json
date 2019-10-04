@@ -2,11 +2,17 @@
   "name": "DevPleno_Meu_Dinheiro",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "repository": "https://github.com/RenatoSiqueira/DevPleno_Meu_Dinheiro.git",
   "author": "Renato Siqueira <renatoelysiqueira@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "ejs": "^2.7.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.3.2"
   }
 }
