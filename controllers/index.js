@@ -1,4 +1,4 @@
-const calculoJuros = (p, i, n) => p * Math.pow(1 + i, n)
+
 
 const ObjectID = require('mongodb').ObjectID
 
@@ -78,26 +78,6 @@ const evolucao = (p, i, n) => {
         })
 }
 
-const calculadora = (req, res) => {
-    const resultado = {
-        calculado: false
-    }
-    if (req.query.valorInicial && req.query.taxa && req.query.tempo) {
-        resultado.calculado = true
-        resultado.total = calculoJuros(
-            parseFloat(req.query.valorInicial),
-            parseFloat(req.query.taxa) / 100,
-            parseInt(req.query.tempo)
-        )
-        resultado.evolucao = evolucao(
-            parseFloat(req.query.valorInicial),
-            parseFloat(req.query.taxa) / 100,
-            parseInt(req.query.tempo)
-        )
-    }
-    res.render('calculadora', { resultado })
-}
-
 const deleteItem = async (req, res) => {
     await remove(app.db, 'operacoes', req.params.id)
     res.redirect('/operacoes')
@@ -137,12 +117,11 @@ const operacoes = (db) => async (req, res) => {
             valor: { $lt: 0 }
         }
     }
-    console.log(db)
 
-    //    const operacoes = await find(db, 'operacoes', conditions)
-    //    const newOperacoes = subtotal(operacoes)
-    //res.render('operacoes', { operacoes: newOperacoes })
-    res.render('operacoes')
+    const operacoes = await find(db, 'operacoes', conditions)
+    const newOperacoes = subtotal(operacoes)
+    res.render('operacoes', { operacoes: newOperacoes })
+
 }
 
 const newOperation = async (req, res) => {
@@ -155,7 +134,6 @@ const newOperation = async (req, res) => {
 }
 
 module.exports = {
-    calculadora,
     deleteItem,
     edit,
     editProcess,

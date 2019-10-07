@@ -2,11 +2,12 @@ const init = db => {
     const express = require('express')
     const router = express.Router()
 
+    const CalculadoraController = require('../controllers/calculadora')
     const Controller = require('../controllers')
 
     router
         .get('/', (req, res) => res.render('home'))
-        .get('/calculadora', Controller.calculadora)
+        .get('/calculadora', CalculadoraController.calculadora)
         .get('/operacoes', Controller.operacoes(db))
     //.get('/delete/:id', Controller.deleteItem)
     //.get('/edit/:id', Controller.edit)
