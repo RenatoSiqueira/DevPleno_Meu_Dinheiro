@@ -1,5 +1,3 @@
-
-
 const ObjectID = require('mongodb').ObjectID
 
 const find = (db, collectionName, conditions) => {
