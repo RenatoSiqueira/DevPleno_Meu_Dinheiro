@@ -8,16 +8,12 @@ const init = db => {
     router
         .get('/', (req, res) => res.render('home'))
         .get('/calculadora', CalculadoraController.calculadora)
+        .get('/nova-operacao', (req, res) => res.render('nova-operacao'))
+        .post('/nova-operacao', Controller.newOperation(db))
         .get('/operacoes', Controller.operacoes(db))
-    //.get('/delete/:id', Controller.deleteItem)
-    //.get('/edit/:id', Controller.edit)
-    //.post('/edit/:id', Controller.editProcess)
-    /*
-    
-    .get('/nova-operacao', (req, res) => res.render('nova-operacao'))
-    .post('/nova-operacao', Controller.newOperation)
-    */
-
+        .get('/operacoes/delete/:id', Controller.deleteItem(db))
+        .get('/operacoes/edit/:id', Controller.edit(db))
+        .post('/operacoes/edit/:id', Controller.editProcess(db))
     return router
 }
 

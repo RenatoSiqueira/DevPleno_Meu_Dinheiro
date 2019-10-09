@@ -6,7 +6,7 @@ const mongoUri = process.env.MONGOSERVER || 'mongodb://localhost:27017/meu-dinhe
 
 const app = require('./app')
 
-MongoClient.connect(mongoUri, ({ useNewUrlParser: true }), (err, db) => {
+MongoClient.connect(mongoUri, (err, db) => {
     if (err) throw err
     app(db).listen(port, () => console.log('Server running...'))
 })
