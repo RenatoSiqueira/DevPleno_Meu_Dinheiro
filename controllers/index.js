@@ -70,43 +70,40 @@ const subtotal = operacoes => {
     })
 }
 
-const evolucao = (p, i, n) => {
-    Array
-        .from(new Array(n), (n, i) => i + 1)
-        .map(mes => {
-            return { mes, juros: calculoJuros(p, i, mes) }
-        })
-}
-
-const deleteItem = async (req, res) => {
-    await remove(app.db, 'operacoes', req.params.id)
+const deleteItem = db => async (req, res) => {
+    await remove(db, 'operacoes', req.params.id)
     res.redirect('/operacoes')
 }
 
-const edit = async (req, res) => {
+const edit = db => async (req, res) => {
     const conditions = {
         _id: new ObjectID(req.params.id)
     }
-    const operacoes = await find(app.db, 'operacoes', conditions)
+    const operacoes = await find(db, 'operacoes', conditions)
     if (operacoes.length === 0)
         res.redirect('/operacoes')
     else
         res.render('edit-operacao', { operacao: operacoes[0] })
 }
 
-const editProcess = async (req, res) => {
+const editProcess = db => async (req, res) => {
     const conditions = {
         _id: new ObjectID(req.params.id)
     }
-    const operacoes = await find(app.db, 'operacoes', conditions)
+    const operacoes = await find(db, 'operacoes', conditions)
     if (operacoes.length === 0)
         res.redirect('/operacoes')
-    else
-        await update(app.db, 'operacoes', req.params.id, req.body)
-    res.redirect('/operacoes')
+    else {
+        const values = {
+            valor: parseInt(req.body.valor),
+            descricao: req.body.descricao
+        }
+        await update(db, 'operacoes', req.params.id, values)
+        res.redirect('/operacoes')
+    }
 }
 
-const operacoes = (db) => async (req, res) => {
+const operacoes = db => async (req, res) => {
     let conditions = {}
     if (req.query.tipo && req.query.tipo === 'entradas') {
         conditions = {
@@ -124,12 +121,12 @@ const operacoes = (db) => async (req, res) => {
 
 }
 
-const newOperation = async (req, res) => {
+const newOperation = db => async (req, res) => {
     const operacao = {
         descricao: req.body.descricao,
         valor: parseFloat(req.body.valor)
     }
-    await insert(app.db, 'operacoes', operacao)
+    await insert(db, 'operacoes', operacao)
     res.redirect('/operacoes')
 }
 
