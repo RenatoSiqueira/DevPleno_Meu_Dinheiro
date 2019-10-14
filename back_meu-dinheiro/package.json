@@ -10,6 +10,7 @@
   "author": "Renato Siqueira <renatoelysiqueira@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
