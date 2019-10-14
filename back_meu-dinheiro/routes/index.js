@@ -14,6 +14,7 @@ const init = db => {
         .get('/operacoes/delete/:id', Controller.deleteItem(db))
         .get('/operacoes/edit/:id', Controller.edit(db))
         .post('/operacoes/edit/:id', Controller.editProcess(db))
+        .get('api/operacoes', Controller.operacoesApi(db))
     return router
 }
 

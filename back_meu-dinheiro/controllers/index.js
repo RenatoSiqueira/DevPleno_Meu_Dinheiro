@@ -121,6 +121,23 @@ const operacoes = db => async (req, res) => {
 
 }
 
+const operacoesApi = db => async (req, res) => {
+    let conditions = {}
+    if (req.query.tipo && req.query.tipo === 'entradas') {
+        conditions = {
+            valor: { $gte: 0 }
+        }
+    } else if (req.query.tipo && req.query.tipo === 'saidas') {
+        conditions = {
+            valor: { $lt: 0 }
+        }
+    }
+
+    const operacoes = await find(db, 'operacoes', conditions)
+    const newOperacoes = subtotal(operacoes)
+    res.send(newOperacoes)
+}
+
 const newOperation = db => async (req, res) => {
     const operacao = {
         descricao: req.body.descricao,
@@ -135,5 +152,6 @@ module.exports = {
     edit,
     editProcess,
     operacoes,
-    newOperation
+    newOperation,
+    operacoesApi
 }
